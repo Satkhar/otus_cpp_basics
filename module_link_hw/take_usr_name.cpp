@@ -6,38 +6,55 @@
 #include <string.h>
 
 /// @brief функция приветсвие. спрашивает имя, ищет лучший результат
-/// @param name указатель на имя
+/// @param high_scores_filename ссылка на имя файла с результатами
+/// @param name ссылка на имя ользователя
 /// @param size сюда пишет размер имени ???
 /// @param best_val сюда пишет лучший результат
 /// @return если всё ок возвращает 0
-int take_user_name(std::string* name, int* size, uint32_t* best_val)
+int take_user_name(const std::string &high_scores_filename, std::string* name, uint16_t* name_nubmer, uint16_t* best_val)
 {
-    uint8_t res = 0;
-	const std::string high_scores_filename = "high_scores.txt";
+    int res = 0;
+    int func = 0;
 
 	// Ask about name
 	std::cout << "Hi! Enter your name, please:" << std::endl;
 	std::string user_name;
 	std::cin >> user_name;
-    uint32_t best_score = 0;
+    uint16_t best_score = 0;
+    const std::string high_scores_filename1 = "high_scores.txt";
 
     *name = user_name;
-    take_best_val(high_scores_filename, user_name, &best_score);
+    func = take_best_val(high_scores_filename1, user_name, name_nubmer, &best_score);
+    
+    // если нет такого
+    // дадим максимальное количество - будто не очень умный пользователь
+    if(func == 1)
+        best_score = -1;
+    
+    // ошибка открытия файла (добавить создание?) а пока - вернуть -1
+    if(func == -1)
+        return func;
 
-    std::cout << "Enter your high score:" << best_score << std::endl;
+    // если нашли
+    if(func == 0)    
+        std::cout << "Your high score:" << best_score << std::endl;
+    
+    *best_val = best_score;
 
     return res;
 }
 
-int take_best_val(const std::string &high_scores_filename, const std::string &searched_name, uint32_t* best_val)
+int take_best_val(const std::string &high_scores_filename, const std::string &searched_name, uint16_t* name_nubmer, uint16_t* best_val)
 {
-    uint8_t res = 0;
+    int res = 0;
+    uint16_t name_count = 0;
     std::string user_name;
 
     std::ifstream in_file{high_scores_filename};
     if (!in_file.is_open()) {
         std::cout << "Failed to open file for read: " << high_scores_filename << "!" << std::endl;
-        return -1;
+        res = -1;
+        return res;
     }
 
     int high_score = 0;
@@ -49,6 +66,7 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
         in_file >> high_score;
         // Ignore the end of line symbol
         in_file.ignore();
+        name_count++;
 
         if (in_file.fail()) {
             break;
@@ -59,9 +77,11 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
             // std::cout << user_name << '\t' << high_score << std::endl;
             std::cout << "i find! you are: " << user_name << std::endl;
             *best_val = high_score;
-            break;
+            *name_nubmer = name_count;
+            return 0;   //  нашли и возвращаем число очков и позицию в файле
         }        
     }
-
+    *name_nubmer = name_count;
+    res = 1;    // не нашли - возвращаем 1
     return res;
 }

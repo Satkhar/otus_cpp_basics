@@ -7,11 +7,9 @@ add_executable(module_link_hw
     main.cpp
     main.h
     take_usr_name.cpp
-    take_usr_name.h
-    # functions.cpp
-    # functions.h
-    # move_me_out.cpp
-    # move_me_out.h
+    take_usr_name.h    
+    set_result.cpp
+    set_result.h
 )
 
 set_target_properties(module_link_hw PROPERTIES
