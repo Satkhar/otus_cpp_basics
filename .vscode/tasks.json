@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create module_link_hw",
+            "type": "shell",
+            "group": "build",
+            "command": "cd ./module_link_hw && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+            "detail": "Создать папку для сборки приекта и собрать проект",
+
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean module_link_hw",
+            "type": "shell",
+            "group": "build",
+            "command": "cd ./module_link_hw && rm -r ./build",
+            "detail": "Удалить собранные файлы и папку",
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake module_link_hw",
+            "type": "shell",
+            "group": "build",
+            "command": "cd ./module_link_hw && rm -r ./build && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+            "detail": "Пересобрать проект",
+
+            "problemMatcher": []
+        },
+
+    ]
+}
