@@ -49,6 +49,7 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
     int res = 0;
     uint16_t name_count = 0;
     std::string user_name;
+    uint8_t user_finded = 0;
 
     std::ifstream in_file{high_scores_filename};
     if (!in_file.is_open()) {
@@ -57,7 +58,9 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
         return res;
     }
 
-    int high_score = 0;
+    //  делаем максимальное число
+    uint16_t high_score = -1;
+    uint16_t high_score_check = -1;
     while (true) 
     {
         // Read the username first
@@ -74,14 +77,61 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
 
         if(user_name == searched_name)
         {
-            // std::cout << user_name << '\t' << high_score << std::endl;
-            std::cout << "i find! you are: " << user_name << std::endl;
-            *best_val = high_score;
-            *name_nubmer = name_count;
-            return 0;   //  нашли и возвращаем число очков и позицию в файле
+            // проверяем и обновляем лучшее значение
+            if(high_score < high_score_check)
+                high_score_check = high_score;
+            
+            // если нашли user, то делаем флаш и возвращаем его номер (первый из возможных)
+            if(user_finded == 0)
+            {
+                user_finded = 1;
+                *name_nubmer = name_count;
+            }
         }        
     }
-    *name_nubmer = name_count;
-    res = 1;    // не нашли - возвращаем 1
+
+    // если нашли, то возвращаем 0, если не нашли возвращаем 1
+    if(user_finded == 1)    
+        res = 0;    
+    else
+    {
+        *name_nubmer = name_count;
+        res = 1;
+    }
+
+    *best_val = high_score_check;
+    
     return res;
+}
+
+
+int view_all_user_name(const std::string &high_scores_filename)
+{
+    std::ifstream in_file{high_scores_filename};
+    if (!in_file.is_open()) {
+        std::cout << "Failed to open file for read: " << high_scores_filename << "!" << std::endl;
+        return -1;
+    }
+
+    std::cout << "High scores table:" << std::endl;
+
+    std::string username;
+    int high_score = 0;
+    while (true) {
+        // Read the username first
+        in_file >> username;
+        // Read the high score next
+        in_file >> high_score;
+        // Ignore the end of line symbol
+        in_file.ignore();
+
+        if (in_file.fail()) {
+            break;
+        }
+
+        // Print the information to the screen
+        std::cout << username << '\t' << high_score << std::endl;
+    }
+
+    return 0;
 }

@@ -25,16 +25,11 @@ int set_best_val(const std::string &high_scores_filename, const std::string &nam
         // если первая запись в файл
         if(name_nubmer == 0)
         {
-            //пропустили все прерыдущие строки и стоим на нужной нам - сюда писать
-            std::cout << " that new data :";
-            // нашли строчку, теперь берем имя, меняем результат
+            // новый пользователь, пишем его
             new_file << name << ' ';
             new_file << new_best;
-            new_file << std::endl;
+            new_file << std::endl << std::endl; //  один перевод строки - конец пользователя, второй - конец таблицы
 
-            std::cout  << name << ' ';
-            std::cout  << new_best;
-            std::cout  << std::endl;
             break;
         }
 
@@ -42,7 +37,6 @@ int set_best_val(const std::string &high_scores_filename, const std::string &nam
         if(count != (name_nubmer-1))
         { // Замените на нужное количество строк
             getline(new_file, line);
-            std::cout << "old data :" << line << std::endl;  // второй вывод т.к. последняя строка "нулевая" только из /n         
         }
         else        
         {

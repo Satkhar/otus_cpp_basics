@@ -1,9 +1,10 @@
 S 10
 D 1
-A 1
+A 2
 C 42
-A 1
+A 3
 B 2
-qwe 3
+qwe 2
 www 6
 qqq 2
+new 7

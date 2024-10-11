@@ -50,7 +50,7 @@ int main(int arg_count, char** arg_value)
         if(input_val == random_value)
         {
             new_best++;
-            std::cout << "wow!" << std::endl;
+            std::cout << "Yes, you win! \n" << std::endl;
             break;
         }
         else if(input_val < random_value)
@@ -60,6 +60,7 @@ int main(int arg_count, char** arg_value)
         }
         else
         {
+            new_best++;
             std::cout << "too hight" << std::endl;
         }
 
@@ -72,10 +73,11 @@ int main(int arg_count, char** arg_value)
 
         if(func != 0)
             std::cout << "something wrong in set record " << std::endl;
-
-        // func = set_best_val(high_scores_filename, user_name, best_score);
     }
 
+    func = view_all_user_name(high_scores_filename);
+    if(func != 0)
+        std::cout << "something wrong in view score table" << std::endl;
 
     return res;
 }

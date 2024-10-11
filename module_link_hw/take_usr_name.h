@@ -5,5 +5,6 @@
 
 int take_user_name(const std::string &high_scores_filename, std::string* name, uint16_t* name_nubmer, uint16_t* best_val);
 int take_best_val(const std::string &high_scores_filename, const std::string &name, uint16_t* name_nubmer, uint16_t* best_val);
+int view_all_user_name(const std::string &high_scores_filename);
 
 #endif  //TAKE_USER_NAME_H
