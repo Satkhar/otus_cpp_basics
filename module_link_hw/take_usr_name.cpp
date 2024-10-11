@@ -5,11 +5,13 @@
 #include <string>
 #include <string.h>
 
+//----------------------------------------------------------------------
+
 /// @brief функция приветсвие. спрашивает имя, ищет лучший результат
 /// @param high_scores_filename ссылка на имя файла с результатами
-/// @param name ссылка на имя ользователя
-/// @param size сюда пишет размер имени ???
-/// @param best_val сюда пишет лучший результат
+/// @param name ссылка куда пишем имя пользователя
+/// @param name_nubmer возваращает порядковый номер пользователя. или на последнюю строку, если пользователь не найден
+/// @param best_val сюда пишет лучший результат. если новый пользователь максимальное значение
 /// @return если всё ок возвращает 0
 int take_user_name(const std::string &high_scores_filename, std::string* name, uint16_t* name_nubmer, uint16_t* best_val)
 {
@@ -44,6 +46,14 @@ int take_user_name(const std::string &high_scores_filename, std::string* name, u
     return res;
 }
 
+//----------------------------------------------------------------------
+
+/// @brief функция поиска в файле заданного пользователя
+/// @param high_scores_filename ссылка на имя файла, где искать
+/// @param searched_name ссылка на имя, кого искать
+/// @param name_nubmer возвращает номер строки если найден, если не найден возвращает куда записать
+/// @param best_val возвращает найденный результат. если не найден, возвращает максимальное число
+/// @return 0 если нет ошибок
 int take_best_val(const std::string &high_scores_filename, const std::string &searched_name, uint16_t* name_nubmer, uint16_t* best_val)
 {
     int res = 0;
@@ -104,7 +114,11 @@ int take_best_val(const std::string &high_scores_filename, const std::string &se
     return res;
 }
 
+//----------------------------------------------------------------------
 
+/// @brief функция для вывода всей таблицы результатов
+/// @param high_scores_filename ссылка на имя файла, откуда выводится результат
+/// @return 0 если не ошибок
 int view_all_user_name(const std::string &high_scores_filename)
 {
     std::ifstream in_file{high_scores_filename};
@@ -135,3 +149,5 @@ int view_all_user_name(const std::string &high_scores_filename)
 
     return 0;
 }
+
+//----------------------------------------------------------------------

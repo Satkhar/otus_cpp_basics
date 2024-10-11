@@ -5,7 +5,14 @@
 #include <string>
 #include <string.h>
 
+//----------------------------------------------------------------------
 
+/// @brief функция записи нового результата
+/// @param high_scores_filename ссылка на имя файла, куда записать
+/// @param name ссылка на имя, кого записать
+/// @param name_nubmer ссылка на порядковый номер в файле результатов, куда записать
+/// @param new_best ссылка на результат, который надо записать
+/// @return 
 int set_best_val(const std::string &high_scores_filename, const std::string &name, const uint16_t &name_nubmer, const uint16_t &new_best)
 {
     int res = 0;
@@ -41,15 +48,9 @@ int set_best_val(const std::string &high_scores_filename, const std::string &nam
         else        
         {
             //пропустили все прерыдущие строки и стоим на нужной нам - сюда писать
-            std::cout << " that new data :";
-            // нашли строчку, теперь берем имя, меняем результат
             new_file << name << ' ';
             new_file << new_best;
             new_file << std::endl;
-
-            std::cout  << name << ' ';
-            std::cout  << new_best;
-            std::cout  << std::endl;
         }
 
         count++;
@@ -62,3 +63,5 @@ int set_best_val(const std::string &high_scores_filename, const std::string &nam
 
     return res;
 }
+
+//----------------------------------------------------------------------
