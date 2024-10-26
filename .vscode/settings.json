@@ -50,5 +50,6 @@
         "typeinfo": "cpp",
         "fstream": "cpp",
         "set": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "E:/Education/Otus/cpp_basics/workspace/otus_cpp_basics/module_link_hw"
 }

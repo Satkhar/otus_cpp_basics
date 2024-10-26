@@ -14,6 +14,8 @@ add_executable(guess_the_number
     argument.h
 )
 
+add_compile_options(-g -Wall -Wextra -pedantic)
+
 set_target_properties(guess_the_number PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
