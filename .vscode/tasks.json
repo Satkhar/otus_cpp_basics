@@ -22,7 +22,10 @@
             "label": "CMake project",
             "type": "shell",
             "group": "build",
-            "command": "rm -r ./build && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+            "command": "cmake -S ./ -B ./build/ && cmake --build ./build/",
+            // "command": "rm -r ./build && mkdir build && cmake -G \"MinGW Makefiles\" && cmake --build ./build/",
+            // "command": "rm -r ./build && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+            // "command": "rm -r ./build && mkdir build && cmake -S ./ -B ./build/ -G \"MinGW Makefiles\" && cmake --build ./build/",
             "detail": "Пересобрать проект",
 
             "problemMatcher": []
