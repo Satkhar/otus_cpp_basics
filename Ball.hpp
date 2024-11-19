@@ -12,4 +12,9 @@ public:
     Point getCenter() const;
     double getRadius() const;
     double getMass() const;
+private:
+    Velocity b_velocity;  // скорость
+    Point b_center;       // центр шара
+    double b_radius;      // радиус
+    double b_mass;        // масса
 };
