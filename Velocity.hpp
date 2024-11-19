@@ -26,5 +26,5 @@ class Velocity {
     }
 
   private:
-    Point vec;
+    Point vec = Point{0.0, 0.0};
 };

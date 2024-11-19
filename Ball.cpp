@@ -7,6 +7,7 @@
  */
 void Ball::setVelocity(const Velocity& velocity) {
     // TODO: место для доработки
+    b_velocity = velocity.vector();
 }
 
 /**
@@ -14,7 +15,7 @@ void Ball::setVelocity(const Velocity& velocity) {
  */
 Velocity Ball::getVelocity() const {
     // TODO: место для доработки
-    return {};
+    return {b_velocity};
 }
 
 /**
@@ -27,6 +28,7 @@ Velocity Ball::getVelocity() const {
  */
 void Ball::draw(Painter& painter) const {
     // TODO: место для доработки
+    painter.draw(b_center,b_radius,b_color);
 }
 
 /**
@@ -35,6 +37,7 @@ void Ball::draw(Painter& painter) const {
  */
 void Ball::setCenter(const Point& center) {
     // TODO: место для доработки
+    b_center = center;
 }
 
 /**
@@ -42,7 +45,7 @@ void Ball::setCenter(const Point& center) {
  */
 Point Ball::getCenter() const {
     // TODO: место для доработки
-    return {};
+    return {b_center};
 }
 
 /**
@@ -52,7 +55,7 @@ Point Ball::getCenter() const {
  */
 double Ball::getRadius() const {
     // TODO: место для доработки
-    return {};
+    return {b_radius};
 }
 
 /**
@@ -64,5 +67,26 @@ double Ball::getRadius() const {
  */
 double Ball::getMass() const {
     // TODO: место для доработки
-    return {};
+    return {b_mass};
+}
+
+/// @brief Устанавливает цвет шара в формате RGB
+/// @param red значение красного
+/// @param green значение зеленого
+/// @param blue значение синего
+void Ball::setColor(double red, double green, double blue)
+{
+    b_color = Color{red, green, blue};
+}
+
+void Ball::setColor(Color& input_color)
+{
+    b_color = Color{input_color};
+}
+
+/// @brief Функция для чтения цвет шара
+/// @return Возвращает цвет шара
+Color Ball::getColor() const
+{
+    return {b_color};
 }
