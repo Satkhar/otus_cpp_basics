@@ -6,7 +6,7 @@
  * @param velocity новое значение скорости
  */
 void Ball::setVelocity(const Velocity& velocity) {
-    // TODO: место для доработки
+    //  [x] TODO: место для доработки
     b_velocity = velocity.vector();
 }
 
@@ -14,8 +14,8 @@ void Ball::setVelocity(const Velocity& velocity) {
  * @return скорость объекта
  */
 Velocity Ball::getVelocity() const {
-    // TODO: место для доработки
-    return {b_velocity};
+    // [x] TODO: место для доработки
+    return b_velocity;
 }
 
 /**
@@ -27,7 +27,7 @@ Velocity Ball::getVelocity() const {
  * @param painter контекст отрисовки
  */
 void Ball::draw(Painter& painter) const {
-    // TODO: место для доработки
+    // [x] TODO: место для доработки
     painter.draw(b_center,b_radius,b_color);
 }
 
@@ -36,7 +36,7 @@ void Ball::draw(Painter& painter) const {
  * @param center новый центр объекта
  */
 void Ball::setCenter(const Point& center) {
-    // TODO: место для доработки
+    // [x] TODO: место для доработки
     b_center = center;
 }
 
@@ -44,8 +44,8 @@ void Ball::setCenter(const Point& center) {
  * @return центр объекта
  */
 Point Ball::getCenter() const {
-    // TODO: место для доработки
-    return {b_center};
+    // [x] TODO: место для доработки
+    return b_center;
 }
 
 /**
@@ -54,8 +54,8 @@ Point Ball::getCenter() const {
  * не требуется
  */
 double Ball::getRadius() const {
-    // TODO: место для доработки
-    return {b_radius};
+    // [x] TODO: место для доработки
+    return b_radius;
 }
 
 /**
@@ -66,8 +66,8 @@ double Ball::getRadius() const {
  * эквивалентна объему: PI * radius^3 * 4. / 3.
  */
 double Ball::getMass() const {
-    // TODO: место для доработки
-    return {b_mass};
+    // [x] TODO: место для доработки
+    return 3.1428*(b_radius*b_radius*b_radius)*4./3.;
 }
 
 /// @brief Устанавливает цвет шара в формате RGB
@@ -88,5 +88,12 @@ void Ball::setColor(Color& input_color)
 /// @return Возвращает цвет шара
 Color Ball::getColor() const
 {
-    return {b_color};
+    return b_color;
+}
+
+/// @brief функция для получения параметра обработки столкновений
+/// @return возвращает true если надо обрабатывать столкновения
+bool Ball::getCollidable() const
+{
+    return b_collidable;
 }

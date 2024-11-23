@@ -14,44 +14,26 @@ static constexpr double timePerTick = 0.001;
 World::World(const std::string& worldFilePath) {
 
     std::ifstream stream(worldFilePath);
-    /**
-     * TODO: хорошее место для улучшения.
-     * Чтение границ мира из модели
-     * Обратите внимание, что здесь и далее мы многократно
-     * читаем в объект типа Point, последовательно
-     * заполняя координаты x и у. Если что-то делаем
-     * многократно - хорошо бы вынести это в функцию
-     * и не дублировать код...
-     */
-    stream >> topLeft.x >> topLeft.y >> bottomRight.x >> bottomRight.y;
+
+    stream >> topLeft >> bottomRight;
     physics.setWorldBox(topLeft, bottomRight);
 
-    /**
-     * TODO: хорошее место для улучшения.
-     * (x, y) и (vx, vy) - составные части объекта, также
-     * как и (red, green, blue). Опять же, можно упростить
-     * этот код, научившись читать сразу Point, Color...
-     */
-    double x;
-    double y;
-    double vx;
-    double vy;
     double radius;
-
-    double red;
-    double green;
-    double blue;
-
     bool isCollidable;
+    Point ball_center;
+    Point ball_velocity;
+    Color ball_color;
 
     // Здесь не хватает обработки ошибок, но на текущем
     // уровне прохождения курса нас это устраивает
-    while (stream.peek(), stream.good()) {
+    while (stream.peek(), stream.good()) 
+    {
         // Читаем координаты центра шара (x, y) и вектор
         // его скорости (vx, vy)
-        stream >> x >> y >> vx >> vy;
+        stream >> ball_center >> ball_velocity;
         // Читаем три составляющие цвета шара
-        stream >> red >> green >> blue;
+        stream >> ball_color;
+
         // Читаем радиус шара
         stream >> radius;
         // Читаем свойство шара isCollidable, которое
@@ -60,26 +42,17 @@ World::World(const std::string& worldFilePath) {
         // В базовой части задания этот параметр
         stream >> std::boolalpha >> isCollidable;
 
-        // TODO: место для доработки.
-        // Здесь не хватает самого главного - создания
+        // [x] место доработки.
+        // Здесь не хватало самого главного - создания
         // объекта класса Ball со свойствами, прочитанными
         // выше, и его помещения в контейнер balls
-        Ball new_ball;
-        Point ball_center = Point{x,y};
+
+        Ball new_ball(radius, isCollidable);
         new_ball.setCenter(ball_center);
-
-        Point ball_velocity = Point{vx,vy};
         new_ball.setVelocity(ball_velocity);
-
-        Color ball_color = Color{red,green,blue};
         new_ball.setColor(ball_color);
 
-        new_ball.getRadius;
-        balls;
-        // После того как мы каким-то образом
-        // сконструируем объект Ball ball;
-        // добавьте его в конец контейнера вызовом
-        // balls.push_back(ball);
+        balls.push_back(new_ball);
     }
 }
 
@@ -87,7 +60,7 @@ World::World(const std::string& worldFilePath) {
 void World::show(Painter& painter) const {
     // Рисуем белый прямоугольник, отображающий границу
     // мира
-    painter.draw(topLeft, bottomRight, Color(1, 1, 1));
+    painter.draw(topLeft, bottomRight, Color(100, 1, 1));
 
     // Вызываем отрисовку каждого шара
     for (const Ball& ball : balls) {

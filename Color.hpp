@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 
 class Color {
   public:
@@ -8,8 +9,18 @@ class Color {
     double green() const;
     double blue() const;
 
+
+
   private:
     double r{};
     double g{};
     double b{};
+};
+
+inline std::istream& operator>> (std::istream& in, Color& variable)
+{
+    double r, g, b;
+    in >> r >> g >> b;
+    variable = Color(r,g,b);
+    return in;
 };
