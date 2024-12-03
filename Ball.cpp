@@ -67,7 +67,7 @@ double Ball::getRadius() const {
  */
 double Ball::getMass() const {
     // [x] TODO: место для доработки
-    return 3.1428*(b_radius*b_radius*b_radius)*4./3.;
+    return M_PI*(b_radius*b_radius*b_radius)*4./3.;
 }
 
 /// @brief Устанавливает цвет шара в формате RGB
