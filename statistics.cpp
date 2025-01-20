@@ -1,5 +1,9 @@
 #include <iostream>
 #include <limits>
+#include <inttypes.h>
+#include <vector>
+#include <numeric>
+#include <cmath>
 
 //------------------------------------------------------------
 
@@ -18,7 +22,8 @@ public:
 // класс для минимума.
 class Min : public IStatistics {
 public:
-	Min() : m_min{std::numeric_limits<double>::min()} {
+	// Min() : m_min{std::numeric_limits<double>::min()} {
+	Min() : m_min{std::numeric_limits<double>::max()} {
 	}
 
 	void update(double next) override {
@@ -44,7 +49,7 @@ private:
 // класс для максимума.
 class Max : public IStatistics {
 public:
-	Max() : m_max{std::numeric_limits<double>::min()} {		// инициализация минимально возможным значением. почему не нулём?
+	Max() : m_max{-std::numeric_limits<double>::max()} {		// инициализация минимально возможным значением. почему не нулём?
 	}
 
 	void update(double next) override {
@@ -67,13 +72,109 @@ private:
 
 //------------------------------------------------------------
 
+// класс для среднего.
+class Mean : public IStatistics {
+public:
+	Mean() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.} {
+	}
+
+	void update(double next) override {
+		{
+			m_count++;
+			m_summ += next;
+			m_mean = m_summ/m_count;
+		}
+	}
+
+	double eval() const override {
+		return m_mean;
+	}
+
+	const char * name() const override {
+		return "mean";
+	}
+
+private:
+	double m_mean;
+	uint64_t m_count;	// счетчик для среднего (берем максимальную размерность)
+	double m_summ;
+};
+
+//------------------------------------------------------------
+
+// класс для среднеквадратичного.
+class StdDev : public IStatistics {
+public:
+	StdDev() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.} {}
+
+	void update(double next) override 
+	{		
+		// среднее
+		m_count++;
+		m_summ += next;
+		m_mean = m_summ/m_count;
+
+		// дисперсия
+		// diff = (next-mean) 			// значение - среднее
+		// squaredDiff += diff*diff		// разницу в квадрат и суммируем
+		// dispersion = squaredDiff/(count - 1)	// делим на количество чисел - 1
+		// не понятно как можно это посчитать без хранения всего массива чисел, нужна помощь
+
+		// m_squaredDiff += (next - m_mean)*(next - m_mean);
+		// m_dispersion = m_squaredDiff/(m_count - 1);
+
+		m_data.push_back(next);	// сохраняем введеные числа
+
+		// каждый раз должна вычисляться т.к. меняется среднее
+		std::vector<double> m_squaredDiff;
+		double m_diff;
+
+		//проходим по всему массиву введенных чисел
+		for(int i = 0; i < m_data.size(); i++)
+		{
+			m_diff = (m_data[i] - m_mean)*(m_data[i] - m_mean);
+			m_squaredDiff.push_back(m_diff);	// вычисляем квадрат отклонения и добавляем в вектор 
+		}
+		//для общей читабельности
+		//сумируем квадратическое отклонение
+		double temp = std::accumulate(m_squaredDiff.begin(), m_squaredDiff.end(), 0);
+		double m_dispersion = temp/(double)((double)m_count); 
+		
+		m_stdDev = sqrt(m_dispersion);
+		
+	}
+
+	double eval() const override {
+		return m_stdDev;
+	}
+
+	const char * name() const override {
+		return "stdDev";
+	}
+
+private:
+	double m_mean;
+	uint64_t m_count;	// счетчик для среднего (берем максимальную размерность)
+	double m_summ;
+	std::vector<double> m_data;
+	double m_stdDev;
+};
+
+// массивы для проверки
+//------------------------------------------------------------
+// 0 1 2 3 4 5 6 7 8 9 10
+// 2 4 4 4 5 5 7 9
+//------------------------------------------------------------
+
 int main() {
 
-	const size_t statistics_count = 2;
+	const size_t statistics_count = 4;
 	IStatistics *statistics[statistics_count];
 
 	statistics[0] = new Min{};
 	statistics[1] = new Max{};
+	statistics[2] = new Mean{};
+	statistics[3] = new StdDev{};
 
 	double val = 0.0;
 	while (std::cin >> val) {
