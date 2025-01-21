@@ -1,6 +1,8 @@
 #include <iostream>
 #include <limits>
 #include <inttypes.h>
+#include <vector>
+#include <numeric>
 
 //------------------------------------------------------------
 
@@ -121,7 +123,10 @@ public:
 			// m_squaredDiff += (next - m_mean)*(next - m_mean);
 			// m_dispersion = m_squaredDiff/(m_count - 1);
 
-			
+			data.push_back(next);	// сохраняем введеные числа
+			m_squaredDiff = std::accumulate(data.begin(), data.end(), 0);
+
+
 		}
 	}
 
@@ -139,6 +144,7 @@ private:
 	double m_summ;
 	double m_squaredDiff;
 	double m_dispersion;
+	std::vector<double> data;
 };
 
 //------------------------------------------------------------
