@@ -3,6 +3,7 @@
 #include <inttypes.h>
 #include <vector>
 #include <numeric>
+#include <cmath>
 
 //------------------------------------------------------------
 
@@ -104,8 +105,8 @@ private:
 // класс для среднеквадратичного.
 class StdDev : public IStatistics {
 public:
-	StdDev() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.}, m_dispersion{0.},
-	m_squaredDiff{0.} {}
+	StdDev() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.}, m_dispersion{0.}
+	 {}
 
 	void update(double next) override {
 		{
@@ -123,10 +124,26 @@ public:
 			// m_squaredDiff += (next - m_mean)*(next - m_mean);
 			// m_dispersion = m_squaredDiff/(m_count - 1);
 
-			data.push_back(next);	// сохраняем введеные числа
-			m_squaredDiff = std::accumulate(data.begin(), data.end(), 0);
+			m_data.push_back(next);	// сохраняем введеные числа
 
+			// каждый раз должна вычисляться т.к. меняется среднее
 
+			// объявляем итератор
+			std::vector<double>::iterator it;
+			
+			std::vector<double> m_squaredDiff;
+
+			//проходим по всему массиву введенных чисел
+			// for(it = m_data.begin(); it != m_data.end(); it++)
+			for(int i = 0; i < m_data.size(); i++)
+			{
+				m_diff = (m_data[i] - m_mean)*(m_data[i] - m_mean);
+				m_squaredDiff.push_back(m_diff);	// вычисляем квадрат отклонения и добавляем в вектор 
+			}
+			double temp = std::accumulate(m_squaredDiff.begin(), m_squaredDiff.end(), 0);
+			m_dispersion = temp/(double)((double)m_count-1.0); 
+			
+			m_stdDev = sqrt(m_dispersion);
 		}
 	}
 
@@ -142,9 +159,10 @@ private:
 	double m_mean;
 	uint64_t m_count;	// счетчик для среднего (берем максимальную размерность)
 	double m_summ;
-	double m_squaredDiff;
+	double m_diff;
 	double m_dispersion;
-	std::vector<double> data;
+	std::vector<double> m_data;
+	double m_stdDev;
 };
 
 //------------------------------------------------------------
