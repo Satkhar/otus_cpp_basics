@@ -105,50 +105,47 @@ private:
 // класс для среднеквадратичного.
 class StdDev : public IStatistics {
 public:
-	StdDev() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.}, m_dispersion{0.}
-	 {}
+	StdDev() : m_mean{0.}, m_count{(uint64_t)0}, m_summ{0.} {}
 
-	void update(double next) override {
+	void update(double next) override 
+	{		
+		// среднее
+		m_count++;
+		m_summ += next;
+		m_mean = m_summ/m_count;
+
+		// дисперсия
+		// diff = (next-mean) 			// значение - среднее
+		// squaredDiff += diff*diff		// разницу в квадрат и суммируем
+		// dispersion = squaredDiff/(count - 1)	// делим на количество чисел - 1
+		// не понятно как можно это посчитать без хранения всего массива чисел, нужна помощь
+
+		// m_squaredDiff += (next - m_mean)*(next - m_mean);
+		// m_dispersion = m_squaredDiff/(m_count - 1);
+
+		m_data.push_back(next);	// сохраняем введеные числа
+
+		// каждый раз должна вычисляться т.к. меняется среднее
+		std::vector<double> m_squaredDiff;
+		double m_diff;
+
+		//проходим по всему массиву введенных чисел
+		for(int i = 0; i < m_data.size(); i++)
 		{
-			// среднее
-			m_count++;
-			m_summ += next;
-			m_mean = m_summ/m_count;
-
-			// дисперсия
-			// diff = (next-mean) 			// значение - среднее
-			// squaredDiff += diff*diff		// разницу в квадрат и суммируем
-			// dispersion = squaredDiff/(count - 1)	// делим на количество чисел - 1
-			// не понятно как можно это посчитать без хранения всего массива чисел, нужна помощь
-
-			// m_squaredDiff += (next - m_mean)*(next - m_mean);
-			// m_dispersion = m_squaredDiff/(m_count - 1);
-
-			m_data.push_back(next);	// сохраняем введеные числа
-
-			// каждый раз должна вычисляться т.к. меняется среднее
-
-			// объявляем итератор
-			std::vector<double>::iterator it;
-			
-			std::vector<double> m_squaredDiff;
-
-			//проходим по всему массиву введенных чисел
-			// for(it = m_data.begin(); it != m_data.end(); it++)
-			for(int i = 0; i < m_data.size(); i++)
-			{
-				m_diff = (m_data[i] - m_mean)*(m_data[i] - m_mean);
-				m_squaredDiff.push_back(m_diff);	// вычисляем квадрат отклонения и добавляем в вектор 
-			}
-			double temp = std::accumulate(m_squaredDiff.begin(), m_squaredDiff.end(), 0);
-			m_dispersion = temp/(double)((double)m_count-1.0); 
-			
-			m_stdDev = sqrt(m_dispersion);
+			m_diff = (m_data[i] - m_mean)*(m_data[i] - m_mean);
+			m_squaredDiff.push_back(m_diff);	// вычисляем квадрат отклонения и добавляем в вектор 
 		}
+		//для общей читабельности
+		//сумируем квадратическое отклонение
+		double temp = std::accumulate(m_squaredDiff.begin(), m_squaredDiff.end(), 0);
+		double m_dispersion = temp/(double)((double)m_count); 
+		
+		m_stdDev = sqrt(m_dispersion);
+		
 	}
 
 	double eval() const override {
-		return m_dispersion;
+		return m_stdDev;
 	}
 
 	const char * name() const override {
@@ -159,12 +156,11 @@ private:
 	double m_mean;
 	uint64_t m_count;	// счетчик для среднего (берем максимальную размерность)
 	double m_summ;
-	double m_diff;
-	double m_dispersion;
 	std::vector<double> m_data;
 	double m_stdDev;
 };
 
+// массивы для проверки
 //------------------------------------------------------------
 // 0 1 2 3 4 5 6 7 8 9 10
 // 2 4 4 4 5 5 7 9
