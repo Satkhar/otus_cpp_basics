@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(hw_NUM)
 
-add_executable(homeWork_NUM 
+add_executable(homeWork_6 
     main.cpp
     # functions.cpp
     # functions.h
@@ -10,7 +10,7 @@ add_executable(homeWork_NUM
     # move_me_out.h
 )
 
-set_target_properties(homeWork_NUM PROPERTIES
+set_target_properties(homeWork_6 PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )

@@ -3,15 +3,15 @@
 #include <iostream>
 #include <stdexcept>
 
-// общий шаблон
+// последовательный контейнер
 template <typename T>
 class MyContainterSerial
 {
 public:
     // конструктор
-    MyContainterSerial() : data(nullptr), capacity((size_t)2), size(0) 
+    MyContainterSerial() : data(nullptr), m_capacity((size_t)2), m_size(0) 
     {
-        data = new T[capacity];
+        data = new T[m_capacity];
     }
 
     //деструктор
@@ -24,61 +24,71 @@ public:
     void push_back(const T &value) 
     {
         // проверяем есть ли куда класть данные
-        if (size == capacity) 
+        if (size() == capacity())
         {
             resize_capacity();
         }
-        data[size++] = value;
+        data[m_size++] = value;
     }
 
     // добавить в произвольную точку
     void insert(const T &value, const size_t pos) 
     {
-        T temp = value;
-
-        for(size_t i = pos; i < size; i++)
-        {
-            // data[]
+        if (pos > size()) {
+            throw std::out_of_range("To hight position number");
         }
+
+        push_back(value);   // чтобы увеличить размер контейнера
+
+        for(size_t i = (size()-1); i > pos; --i)
+        {
+            data[i] = data[i-1];
+        }
+        data[pos] = value;
     }
 
-    // удалить элемент
+    // удалить определенный элемент
     void erase(const size_t pos) 
     {
-        if (size == 0) {
+        if (size() == 0) {
             throw std::out_of_range("Vector is empty");
         }
-        --size;
+
+        // Сдвигаем элементы влево, начиная с pos + 1
+        for (size_t i = pos; i < size() - 1; ++i) 
+        {
+            data[i] = data[i + 1];
+        }
+        --m_size;
     }
 
     // получить размер
     size_t size() 
     {
-        return size;
+        return m_size;
     }
 
     // получить вместимость
     size_t capacity() 
     {
-        return capacity;
+        return m_capacity;
     }
 
     // доступ по индексу
-    T &operator[](const size_t pos) 
+    T &operator[](const size_t pos)
     {
-        return data[index];
+        return data[pos];
     }
 
 private:
-    T value_;
 
     // увеличение размера?
     // Увеличивает вместимость контейнера
     void resize_capacity()
     {
-        capacity *= 2; // Удваиваем вместимость
-        T *new_data = new T[capacity];  // выделяем новый кусок памяти
-        for (size_t i = 0; i < size; ++i)
+        m_capacity *= 2; // Удваиваем вместимость
+        T *new_data = new T[m_capacity];  // выделяем новый кусок памяти
+        for (size_t i = 0; i < size(); ++i)
         {
             new_data[i] = data[i];  // копируем
         }
@@ -87,57 +97,106 @@ private:
     }
 
     T *data;         // Указатель на данные
-    size_t capacity; // Вместимость контейнера
-    size_t size;     // Текущее количество элементов
+    size_t m_capacity; // Вместимость контейнера
+    size_t m_size;     // Текущее количество элементов
 };
 
-// реализация для int
-template <>
-class MyContainterSerial<int>
+
+
+// списочный контейнер
+template <typename T>
+class MyContainterList
 {
 public:
-    MyContainterSerial(int v) : value_{v} {}
+    // конструктор
+    MyContainterList() : data(nullptr), m_capacity((size_t)2), m_size(0) 
+    {
+        data = new T[m_capacity];
+    }
 
-    // bool push_back(const int &v)
-    // {
-    //     T *new_region = new T[m_size + 1]; // новая область памяти
-    //     for (size_t i = 0; i < m_size; ++i)
-    //     {
-    //         new_region[i] = m_region[i]; // копирование элементов
-    //     }
-    //     new_region[m_size] = value; // добавление нового элемента
-    //     delete[] m_region;          // удаление старой области
-    //     m_region = new_region;      // сохранение новой в мембер
-    //     m_size += 1;                // обновление информации о размере
-    // }
+    //деструктор
+    ~MyContainterSerial() 
+    {
+        delete[] data;
+    };
+
+    // добавить в конец контейнера
+    void push_back(const T &value) 
+    {
+        // проверяем есть ли куда класть данные
+        if (size() == capacity())
+        {
+            resize_capacity();
+        }
+        data[m_size++] = value;
+    }
 
     // добавить в произвольную точку
-    bool insert(const int &v, const size_t pos) {}
+    void insert(const T &value, const size_t pos) 
+    {
+        if (pos > size()) {
+            throw std::out_of_range("To hight position number");
+        }
 
-    // удалить элемент
-    bool erase(const size_t pos) {}
+        push_back(value);   // чтобы увеличить размер контейнера
+
+        for(size_t i = (size()-1); i > pos; --i)
+        {
+            data[i] = data[i-1];
+        }
+        data[pos] = value;
+    }
+
+    // удалить определенный элемент
+    void erase(const size_t pos) 
+    {
+        if (size() == 0) {
+            throw std::out_of_range("Vector is empty");
+        }
+
+        // Сдвигаем элементы влево, начиная с pos + 1
+        for (size_t i = pos; i < size() - 1; ++i) 
+        {
+            data[i] = data[i + 1];
+        }
+        --m_size;
+    }
 
     // получить размер
-    bool size(const size_t &size) {}
+    size_t size() 
+    {
+        return m_size;
+    }
+
+    // получить вместимость
+    size_t capacity() 
+    {
+        return m_capacity;
+    }
 
     // доступ по индексу
-    int &operator[](const size_t pos) {}
+    T &operator[](const size_t pos)
+    {
+        return data[pos];
+    }
 
 private:
-    int value_;
-    size_t m_size;
-};
 
-// void
-// MyContainter::push_back(T value)
-// {
-//     T *new_region = new T[m_size + 1]; // новая область памяти
-//     for (size_t i = 0; i < m_size; ++i)
-//     {
-//         new_region[i] = m_region[i]; // копирование элементов
-//     }
-//     new_region[m_size] = value; // добавление нового элемента
-//     delete[] m_region;          // удаление старой области
-//     m_region = new_region;      // сохранение новой в мембер
-//     m_size += 1;                // обновление информации о размере
-// }
+    // увеличение размера?
+    // Увеличивает вместимость контейнера
+    void resize_capacity()
+    {
+        m_capacity *= 2; // Удваиваем вместимость
+        T *new_data = new T[m_capacity];  // выделяем новый кусок памяти
+        for (size_t i = 0; i < size(); ++i)
+        {
+            new_data[i] = data[i];  // копируем
+        }
+        delete[] data;  // удаляем старый(маленький) кусок
+        data = new_data;    // теперь указатель на старый кусок указывает на новый кусок
+    }
+
+    T *data;         // Указатель на данные
+    size_t m_capacity; // Вместимость контейнера
+    size_t m_size;     // Текущее количество элементов
+};
