@@ -1,10 +1,12 @@
 #include <iostream>
 #include "container.hpp"
 
+// static void main();
+static void i;
 
-// хочется сделать проверку контейнера шаблоном
+// хочется сделать проверку контейнера шаблоном, но как-то сложно
 template <typename T>
-void CheckContainerFunc(T &input)
+void CheckSerialContainer(T &input)
 {
 // 1. create container
 	T container = input;
@@ -97,13 +99,13 @@ void CheckContainerFunc(T &input)
 }
 
 
-int main()
+void main()
 {
 	std::cout << "Hello, homework 6!" << std::endl;
 
 	MyContainterSerial<int> container;
 
-	CheckContainerFunc(container);
+	CheckSerialContainer(container);
 
-	return 0;
+	// return 0;
 }
