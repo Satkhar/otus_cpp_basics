@@ -14,6 +14,29 @@ public:
         data = new T[m_capacity];
     }
 
+    // конструктор копирования
+    MyContainterSerial(const MyContainterSerial& other) : m_size(other.m_size) 
+    {
+        data = new int[m_size]; // Выделяем новую память
+        m_capacity = other.m_capacity;
+        std::copy(other.data, other.data + m_size, data); // Копируем данные
+    }
+
+    // оператор =
+    MyContainterSerial& operator= (const MyContainterSerial& other) 
+    {
+        if (this != &other) { // Защита от самоприсваивания
+            delete[] data; // Освобождаем старую память
+
+            m_size = other.m_size;          // размер такой же?
+            m_capacity = other.m_capacity;  // вместимость?
+
+            data = new int[m_size]; // Выделяем новую память
+            std::copy(other.data, other.data + m_size, data); // Копируем данные
+        }
+        return *this;
+    }
+
     //деструктор
     ~MyContainterSerial() 
     {
@@ -203,10 +226,10 @@ public:
     }
 
     // доступ по индексу
-    T &operator[](const size_t pos)
-    {
-        // return data[pos];
-    }
+    // T &operator[](const size_t pos)
+    // {
+    //     // return data[pos];
+    // }
 
 
 

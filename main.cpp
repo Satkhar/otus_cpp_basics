@@ -1,8 +1,6 @@
 #include <iostream>
 #include "container.hpp"
 
-// static void main();
-static void i;
 
 // хочется сделать проверку контейнера шаблоном, но как-то сложно
 template <typename T>
@@ -99,7 +97,7 @@ void CheckSerialContainer(T &input)
 }
 
 
-void main()
+int main()
 {
 	std::cout << "Hello, homework 6!" << std::endl;
 
