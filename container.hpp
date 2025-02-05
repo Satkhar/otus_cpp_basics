@@ -187,7 +187,7 @@ public:
     }
 
     
-
+    // TODO надо
     // добавить в произвольную точку
     void insert(const T &value, const size_t pos) 
     {
@@ -204,6 +204,8 @@ public:
         // data[pos] = value;
     }
 
+    // TODO надо
+    // смотрим откуда ближе идти удалять и идём удалять?
     // удалить определенный элемент
     void erase(const size_t pos) 
     {
@@ -219,16 +221,31 @@ public:
         // --m_size;
     }
 
+    // TODO надо
     // получить размер
     size_t size() 
     {
         return m_size;
     }
 
+    // TODO надо
+    // берем индекс, смотрим откуда ближе идти и идём пошагово?
     // доступ по индексу
     // T &operator[](const size_t pos)
     // {
     //     // return data[pos];
+    // }
+
+    //     T& at(size_t index) {
+    //     if (index >= size) {
+    //         throw std::out_of_range("Index out of range");
+    //     }
+
+    //     Node* current = head;
+    //     for (size_t i = 0; i < index; ++i) {
+    //         current = current->next;
+    //     }
+    //     return current->data;
     // }
 
 
