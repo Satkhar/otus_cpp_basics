@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdexcept>
 
+//----------------------------------------------------------------------------
+
 // последовательный контейнер
 template <typename T>
 class MyContainterSerial
@@ -40,6 +42,7 @@ public:
     //деструктор
     ~MyContainterSerial() 
     {
+        std::cout << "Serial container destroy" << std::endl;
         delete[] data;
     };
 
@@ -105,7 +108,6 @@ public:
 
 private:
 
-    // увеличение размера?
     // Увеличивает вместимость контейнера
     void resize_capacity()
     {
@@ -124,6 +126,8 @@ private:
     size_t m_size;     // Текущее количество элементов
 };
 
+//----------------------------------------------------------------------------
+
 // для списочного, шаблон узла
 template <typename T>
 struct Node 
@@ -136,6 +140,8 @@ struct Node
     Node(const T& value) : data(value), next(nullptr), prev(nullptr) {}
 };
 
+//----------------------------------------------------------------------------
+
 // списочный контейнер
 template <typename T>
 class MyContainterList
@@ -147,7 +153,11 @@ public:
     // деструктор
     ~MyContainterList() 
     {
-        // clear();
+        std::cout << "List container destroy" << std::endl;
+        while(size())
+        {
+            erase(0);
+        }
     }
 
     // добавить в конец контейнера
@@ -204,24 +214,14 @@ public:
         else if (pos == 0) 
         {
             // Вставка в начало
-
             push_front(value);
             return;
-
-            // newNode->next = m_head;
-            // m_head->prev = newNode;
-            // m_head = newNode;
         } 
         else if (pos == size()) 
         {
             // Вставка в конец
-
             push_back(value);
             return;
-
-            // newNode->prev = tail;
-            // tail->next = newNode;
-            // tail = newNode;
         } 
         else 
         {
@@ -241,20 +241,10 @@ public:
         ++m_size;
     }
 
-    // TODO надо
     // смотрим откуда ближе идти удалять и идём удалять?
     // удалить определенный элемент
     void erase(const size_t pos) 
     {
-        // if (size() == 0) {
-        //     throw std::out_of_range("Vector is empty");
-        // }
-
-        // // Сдвигаем элементы влево, начиная с pos + 1
-        // for (size_t i = pos; i < size() - 1; ++i) 
-        // {
-        //     data[i] = data[i + 1];
-        // }
         if (pos >= size()) 
         {
             throw std::out_of_range("Index out of range");
@@ -285,7 +275,6 @@ public:
         }
 
         delete toRemove;
-
 
         --m_size;
     }
@@ -320,3 +309,5 @@ private:
     Node<T>* m_tail;    // тут указатель на последний узел
     size_t m_size;      // тут размер списка
 };
+
+//----------------------------------------------------------------------------

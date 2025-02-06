@@ -76,6 +76,7 @@
         "list": "cpp",
         "xhash": "cpp",
         "xtree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "container.hpp": "c"
     }
 }
