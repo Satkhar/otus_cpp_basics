@@ -46,7 +46,11 @@ void CheckSerialContainer(MyContainterSerial<int> &input)
 		if(k == need_del_num[del_count])
 		{
 			container.erase(k-1);
-			--del_count;
+			if(del_count > 0)
+				--del_count;
+			else
+				break;
+			// (del_count > 0) ? (--del_count) : 0;
 		}
 	}
 
@@ -139,7 +143,10 @@ void CheckListContainer(MyContainterList<int> &input)
 		if(k == need_del_num[del_count])
 		{
 			container.erase(k-1);
-			--del_count;
+			if(del_count > 0)
+				--del_count;
+			else
+				break;
 		}
 	}
 
@@ -201,7 +208,9 @@ int main()
 
 	CheckSerialContainer(container_serial);
 
-	CheckListContainer(container_serial);
+	std::cout << "---------" << std::endl;
+
+	CheckListContainer(container_list);
 
 
 	// return 0;

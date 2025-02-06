@@ -187,16 +187,16 @@ public:
     }
 
     // добавить в произвольную точку
-    void insert(MyContainterList<T>& container, const T &value, const size_t pos) 
+    void insert(const T &value, const size_t pos) 
     {
-        if (pos > container.size()) 
+        if (pos > size()) 
         {
             throw std::out_of_range("Index out of range");
         }
 
         Node<T>* newNode = new Node<T>(value);
 
-        if (container.size() == 0) 
+        if (size() == 0) 
         {
             // Если список пуст, новый элемент становится головой и хвостом
             m_head = m_tail = newNode;
