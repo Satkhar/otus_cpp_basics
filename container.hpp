@@ -186,22 +186,59 @@ public:
         ++m_size;
     }
 
-    
-    // TODO надо
     // добавить в произвольную точку
-    void insert(const T &value, const size_t pos) 
+    void insert(MyContainterList<T>& container, const T &value, const size_t pos) 
     {
-        // if (pos > size()) {
-        //     throw std::out_of_range("To hight position number");
-        // }
+        if (pos > container.size()) 
+        {
+            throw std::out_of_range("Index out of range");
+        }
 
-        // push_back(value);   // чтобы увеличить размер контейнера
+        Node<T>* newNode = new Node<T>(value);
 
-        // for(size_t i = (size()-1); i > pos; --i)
-        // {
-        //     data[i] = data[i-1];
-        // }
-        // data[pos] = value;
+        if (container.size() == 0) 
+        {
+            // Если список пуст, новый элемент становится головой и хвостом
+            m_head = m_tail = newNode;
+        } 
+        else if (pos == 0) 
+        {
+            // Вставка в начало
+
+            push_front(value);
+            return;
+
+            // newNode->next = m_head;
+            // m_head->prev = newNode;
+            // m_head = newNode;
+        } 
+        else if (pos == size()) 
+        {
+            // Вставка в конец
+
+            push_back(value);
+            return;
+
+            // newNode->prev = tail;
+            // tail->next = newNode;
+            // tail = newNode;
+        } 
+        else 
+        {
+            // Вставка в середину
+            Node<T>* current = m_head;
+            for (size_t i = 0; i < pos; ++i) 
+            {
+                current = current->next;
+            }
+
+            newNode->prev = current->prev;
+            newNode->next = current;
+            current->prev->next = newNode;
+            current->prev = newNode;
+        }
+
+        ++m_size;
     }
 
     // TODO надо
@@ -218,35 +255,63 @@ public:
         // {
         //     data[i] = data[i + 1];
         // }
-        // --m_size;
+        if (pos >= size()) 
+        {
+            throw std::out_of_range("Index out of range");
+        }
+
+        Node<T>* toRemove = m_head;
+        for (size_t i = 0; i < pos; ++i) 
+        {
+            toRemove = toRemove->next;
+        }
+
+        if (toRemove->prev) 
+        {
+            toRemove->prev->next = toRemove->next;
+        } 
+        else 
+        {
+            m_head = toRemove->next; // Удаляем голову
+        }
+
+        if (toRemove->next) 
+        {
+            toRemove->next->prev = toRemove->prev;
+        } 
+        else 
+        {
+            m_tail = toRemove->prev; // Удаляем хвост
+        }
+
+        delete toRemove;
+
+
+        --m_size;
     }
 
-    // TODO надо
     // получить размер
     size_t size() 
     {
         return m_size;
     }
 
-    // TODO надо
-    // берем индекс, смотрим откуда ближе идти и идём пошагово?
     // доступ по индексу
-    // T &operator[](const size_t pos)
-    // {
-    //     // return data[pos];
-    // }
+    T &operator[](const size_t pos)
+    {
+        // return data[pos];
+        if (pos >= size()) {
+            throw std::out_of_range("Index out of range");
+        }
 
-    //     T& at(size_t index) {
-    //     if (index >= size) {
-    //         throw std::out_of_range("Index out of range");
-    //     }
-
-    //     Node* current = head;
-    //     for (size_t i = 0; i < index; ++i) {
-    //         current = current->next;
-    //     }
-    //     return current->data;
-    // }
+        Node<T>* current = m_head;
+        // можно улучшить - смотрим откуда ближе(начало или конец) и оттуда двигаемся
+        for (size_t i = 0; i < pos; ++i) 
+        {
+            current = current->next;
+        }
+        return current->data;
+    }
 
 
 
