@@ -77,6 +77,17 @@
         "xhash": "cpp",
         "xtree": "cpp",
         "map": "cpp",
-        "container.hpp": "c"
+        "container.hpp": "c",
+        "forward_list": "cpp",
+        "unordered_set": "cpp",
+        "fstream": "cpp",
+        "thread": "cpp",
+        "any": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "set": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     }
 }

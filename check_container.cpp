@@ -1,9 +1,9 @@
 #include <iostream>
 #include "container.hpp"
 
-void CheckContainerSerial(MyContainterSerial<int> &input);
+// void CheckContainerSerial(MyContainterSerial<int> &input);
 
-void CheckContainerList(MyContainterList<int> &input);
+// void CheckContainerList(MyContainterList<int> &input);
 
 //----------------------------------------------------------------------------
 
@@ -43,12 +43,12 @@ void CheckContainer(T &input)
 	need_del_num.push_back((size_t)7);
 
 	// проходим с конца и удаляем с самого старшего ненужного элемента
-	for(size_t k = (container.size()-1), del_count = (need_del_num.size()-1); k > 0; --k)
+	for(size_t k = (container.size()-1), del_count = static_cast<size_t>(need_del_num.size()-1); k > 0ULL; --k)
 	{
-		if(k == need_del_num[del_count])
+		if(k == static_cast<size_t>(need_del_num[del_count]))
 		{
 			container.erase(k-1);
-			if(del_count > 0)
+			if(del_count > 0ULL)
 				--del_count;
 			else
 				break;
@@ -58,7 +58,7 @@ void CheckContainer(T &input)
 
 	// 6. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < static_cast<size_t>(container.size()); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -71,7 +71,7 @@ void CheckContainer(T &input)
 
 	// 8. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -85,7 +85,7 @@ void CheckContainer(T &input)
 
 	// 10. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -96,7 +96,7 @@ void CheckContainer(T &input)
 
 	// 12. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -105,7 +105,7 @@ void CheckContainer(T &input)
 }
 
 //----------------------------------------------------------------------------
-
+/*
 void CheckContainerSerial(MyContainterSerial<int> &input)
 {
 // 1. create container
@@ -143,7 +143,7 @@ void CheckContainerSerial(MyContainterSerial<int> &input)
 	// проходим с конца и удаляем с самого старшего ненужного элемента
 	for(size_t k = (container.size()-1), del_count = (need_del_num.size()-1); k > 0; --k)
 	{
-		if(k == need_del_num[del_count])
+		if(k == static_cast<size_t>(need_del_num[del_count]))
 		{
 			container.erase(k-1);
 			if(del_count > 0)
@@ -156,7 +156,7 @@ void CheckContainerSerial(MyContainterSerial<int> &input)
 
 	// 6. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -169,7 +169,7 @@ void CheckContainerSerial(MyContainterSerial<int> &input)
 
 	// 8. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -183,7 +183,7 @@ void CheckContainerSerial(MyContainterSerial<int> &input)
 
 	// 10. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -194,7 +194,7 @@ void CheckContainerSerial(MyContainterSerial<int> &input)
 
 	// 12. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -241,7 +241,7 @@ void CheckContainerList(MyContainterList<int> &input)
 	// проходим с конца и удаляем с самого старшего ненужного элемента
 	for(size_t k = (container.size()-1), del_count = (need_del_num.size()-1); k > 0; --k)
 	{
-		if(k == need_del_num[del_count])
+		if(k == static_cast<size_t>(need_del_num[del_count]))
 		{
 			container.erase(k-1);
 			if(del_count > 0)
@@ -253,7 +253,7 @@ void CheckContainerList(MyContainterList<int> &input)
 
 	// 6. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -266,7 +266,7 @@ void CheckContainerList(MyContainterList<int> &input)
 
 	// 8. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -280,7 +280,7 @@ void CheckContainerList(MyContainterList<int> &input)
 
 	// 10. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
@@ -291,12 +291,12 @@ void CheckContainerList(MyContainterList<int> &input)
 
 	// 12. view new container
 	std::cout << "new container: " << std::endl;
-	for(int i = 0; i < container.size(); ++i)
+	for(size_t i = 0; i < container.size(); ++i)
 	{
 		std::cout << container[i] << " ";
 	}
 	std::cout << std::endl;
 	return;
 }
-
+*/
 //----------------------------------------------------------------------------
