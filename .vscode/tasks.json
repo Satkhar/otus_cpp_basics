@@ -18,15 +18,40 @@
             "detail": "Удалить собранные файлы и папку",
             "problemMatcher": []
         },
+        // {
+        //     "label": "CMake project",
+        //     "type": "shell",
+        //     "group": "build",
+        //     "command": "rm -r ./build && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+        //     "detail": "Пересобрать проект",
+
+        //     "problemMatcher": []
+        // },
+        
         {
             "label": "CMake project",
             "type": "shell",
             "group": "build",
-            "command": "rm -r ./build && mkdir build && cmake -S ./ -B ./build/ && cmake --build ./build/",
+            "command": "cmake",
+            "args": [
+              
+              // "-G", "MinGW Makefiles",
+                "--build",
+                "./build/",
+                "--config",   // может лишний
+                "Debug",      // может лишний
+
+                // "-j 20",
+                // "--verbose",
+
+                // "-ID:/Work/src/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/include/c++/14.2.1",
+
+            ],
             "detail": "Пересобрать проект",
 
             "problemMatcher": []
         },
+
 
     ]
 }
