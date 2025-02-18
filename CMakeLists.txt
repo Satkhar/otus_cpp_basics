@@ -13,25 +13,32 @@ add_subdirectory(
     "${CMAKE_CURRENT_SOURCE_DIR}/googletest" 
     "googletest"
 )
-# FetchContent_Declare(
-#     my_dependency
-#     SOURCE_DIR ${CMAKE_SOURCE_DIR}/third_party/my_dependency
-# )
-# FetchContent_MakeAvailable(my_dependency)
 
 # Main target
 add_executable(homeWork_7 
-    main.cpp
-    check_container.cpp
-    # functions.h
-    # move_me_out.cpp
-    # move_me_out.h
+    src/main.cpp
+    src/check_container.cpp
+    src/containerSerial.hpp
+    src/containerList.hpp
 )
 
 # Test target
 add_executable(
     test_list
-    test/test_list.cpp
+    test/list_container_test.cpp
+    test/serial_container_test.cpp
+)
+
+# Add src to the include directories for the test target
+target_include_directories(
+    test_list PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+)
+
+# Link test target against gtest libraries
+target_link_libraries(
+    test_list PRIVATE
+    gtest gtest_main
 )
 
 set_target_properties(homeWork_7 PROPERTIES
