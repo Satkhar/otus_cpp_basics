@@ -27,6 +27,23 @@ public:
     // конструктор
     MyContainterList() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
 
+    // если задан размер
+    MyContainterList(size_t m_size) : m_head(nullptr), m_tail(nullptr) 
+    {
+        if (m_size > MAX_ALLOWED_SIZE) {
+            throw std::invalid_argument("Invalid size");
+        }
+
+
+        try {
+            for (size_t i = 0; i < m_size; ++i) {
+                push_back(T()); // Добавляем пустые элементы
+            }
+        } catch (const std::bad_alloc&) {
+            throw std::runtime_error("Failed to allocate memory for list container");
+        }
+    }
+
     // деструктор
     ~MyContainterList() 
     {
@@ -188,6 +205,8 @@ private:
     Node<T>* m_head;    // тут указатель на первый узел
     Node<T>* m_tail;    // тут указатель на последний узел
     size_t m_size;      // тут размер списка
+
+    static constexpr size_t MAX_ALLOWED_SIZE = 1'000'000;
 };
 
 //----------------------------------------------------------------------------

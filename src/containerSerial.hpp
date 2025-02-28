@@ -13,7 +13,26 @@ public:
     // конструктор
     MyContainterSerial() : data(nullptr), m_capacity((size_t)2), m_size(0) 
     {
+        try 
+        {
+            data = new T[m_capacity];
+        } 
+        catch (const std::exception&) 
+        {
+            throw std::runtime_error("Failed to allocate memory for serial container");
+        }
+    }
+
+    // если задан размер
+    MyContainterSerial(size_t m_capacity) : data(nullptr), m_capacity(m_capacity), m_size(m_capacity)
+    {
+        if(m_capacity > MAX_ALLOWED_SIZE)
+        {
+            throw std::invalid_argument("Invalid size");
+        }
+
         data = new T[m_capacity];
+
     }
 
     // конструктор копирования
@@ -112,10 +131,15 @@ public:
     }
 
 private:
-
+    static constexpr size_t MAX_ALLOWED_SIZE = 1'000'000;
     // Увеличивает вместимость контейнера
     void resize_capacity()
     {
+        if(m_capacity > MAX_ALLOWED_SIZE)
+        {
+            throw std::bad_alloc();
+        }
+
         m_capacity *= 2; // Удваиваем вместимость
         T *new_data = new T[m_capacity];  // выделяем новый кусок памяти
         for (size_t i = 0; i < size(); ++i)
