@@ -18,7 +18,27 @@ TEST(Serial, Empty) {
     ASSERT_TRUE(list.empty());
 }
 
-// добавление элеммента в конец
+// Попытка создать вектор с большим размером
+TEST(Serial, BigSize) {
+    EXPECT_THROW(
+        {
+            MyContainterSerial<int> list(1'000'001);
+        },
+        std::invalid_argument
+    );
+}
+
+// Попытка создать вектор с отрицательным размером
+TEST(Serial, NegSize) {
+    EXPECT_THROW(
+        {
+            MyContainterSerial<int> list(static_cast<size_t>(-1));
+        },
+        std::invalid_argument
+    );
+}
+
+// добавление элемента в конец
 TEST(Serial, PushBack) {
     // Arrange
     const size_t count = 10;
