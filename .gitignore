@@ -34,3 +34,6 @@
 # vs code 
 settings.json
 /build
+
+#PVS-studio
+/.PVS-Studio

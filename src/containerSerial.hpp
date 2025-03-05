@@ -17,12 +17,13 @@ public:
         {
             data = new T[m_capacity];
         } 
-        catch (std::exception&) 
+        catch (const std::exception&) 
         {
-            throw std::runtime_error("Failed to allocate memory for container");
+            throw std::runtime_error("Failed to allocate memory for serial container");
         }
     }
 
+    // если задан размер
     MyContainterSerial(size_t m_capacity) : data(nullptr), m_capacity(m_capacity), m_size(m_capacity)
     {
         if(m_capacity > MAX_ALLOWED_SIZE)

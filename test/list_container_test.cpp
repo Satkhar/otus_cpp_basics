@@ -18,6 +18,16 @@ TEST(List, Empty) {
     ASSERT_TRUE(list.empty());
 }
 
+// Попытка создать вектор с большим размером
+TEST(List, BigSize) {
+    EXPECT_THROW(
+        {
+            MyContainterList<int> list(1'000'001); //   1'000'001     1'000'000'000  
+        },
+        std::invalid_argument
+    );
+}
+
 // добавление элеммента в конец
 TEST(List, PushBack) {
     // Arrange

@@ -48,9 +48,11 @@ TEST(Serial, PushBack) {
     for (size_t i = 0; i < count; ++i) {
         list.push_back(i);
     }
+    list.push_back(0x55);
 
     // Assert
-    ASSERT_EQ(list.size(), count);
+    ASSERT_EQ(list.size(), count+1);
+    ASSERT_EQ(list[count], 0x55);
     ASSERT_FALSE(list.empty());
 }
 
@@ -121,7 +123,23 @@ TEST(Serial, PushMiddle)
 
     //проверяем порядок чисел
     EXPECT_EQ(list.size(), count+1);
-    ASSERT_EQ(list[middle_pos], 20);
+
+    for(size_t i = 0; i < (count+1); ++i)
+    {
+        if(i < middle_pos)  // до вставки
+        {
+            ASSERT_EQ(list[i], i);
+        }
+        else if(i == middle_pos)    // середина
+        {
+            ASSERT_EQ(list[middle_pos], 20);
+            ++i;
+        }
+        else    // после вставки
+        {
+            ASSERT_EQ(list[i], i-1);
+        }
+    }
 }
 
 // - удаление элементов из начала
