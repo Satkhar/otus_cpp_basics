@@ -31,7 +31,7 @@ public:
     MyContainterList(size_t m_size) : m_head(nullptr), m_tail(nullptr) 
     {
         if (m_size > MAX_ALLOWED_SIZE) {
-            throw std::invalid_argument("Size exceeds maximum allowed limit");
+            throw std::invalid_argument("Invalid size");
         }
 
 

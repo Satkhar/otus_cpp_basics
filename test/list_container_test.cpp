@@ -28,6 +28,17 @@ TEST(List, BigSize) {
     );
 }
 
+
+// Попытка создать вектор с отрицательным размером
+TEST(List, NegSize) {
+    EXPECT_THROW(
+        {
+            MyContainterList<int> list(static_cast<size_t>(-1));
+        },
+        std::invalid_argument
+    );
+}
+
 // добавление элеммента в конец
 TEST(List, PushBack) {
     // Arrange
@@ -38,9 +49,11 @@ TEST(List, PushBack) {
     for (size_t i = 0; i < count; ++i) {
         list.push_back(i);
     }
+    list.push_back(0x55);
 
     // Assert
-    ASSERT_EQ(list.size(), count);
+    ASSERT_EQ(list.size(), count+1);
+    ASSERT_EQ(list[count], 0x55);
     ASSERT_FALSE(list.empty());
 }
 
@@ -111,7 +124,23 @@ TEST(List, PushMiddle)
 
     //проверяем порядок чисел
     EXPECT_EQ(list.size(), count+1);
-    ASSERT_EQ(list[middle_pos], 20);
+
+    for(size_t i = 0; i < (count+1); ++i)
+    {
+        if(i < middle_pos)  // до вставки
+        {
+            ASSERT_EQ(list[i], i);
+        }
+        else if(i == middle_pos)    // середина
+        {
+            ASSERT_EQ(list[middle_pos], 20);
+            ++i;
+        }
+        else    // после вставки
+        {
+            ASSERT_EQ(list[i], i-1);
+        }
+    }
 }
 
 // - удаление элементов из начала
