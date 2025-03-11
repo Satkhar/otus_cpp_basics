@@ -23,5 +23,11 @@ int main()
 
 	MyContainterList<int> container2;
 
+	int temp = 0;
+	if(temp = 10)
+	{
+		temp++;
+	}
+
 	CheckContainer(container2);
 }
