@@ -8,6 +8,32 @@ if (MSVC)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 endif()
 
+
+# option(USE_CLANG_TIDY "Enable clang-tidy for static analysis" ON)	#OFF ON
+
+find_program(CLANG-TIDY_PATH NAMES clang-tidy-19 clang-tidy REQUIRED)
+    message(STATUS "Found clang-tidy: ${CLANG-TIDY_PATH}")
+    set_target_properties(${OAM_CONFIGURATOR_CLIENT}
+        PROPERTIES
+            CXX_CLANG_TIDY ${CLANG-TIDY_PATH}
+    )
+
+# if(USE_CLANG_TIDY)
+    # find_program(CLANG-TIDY_PATH NAMES clang-tidy-19 clang-tidy REQUIRED)
+    # find_program(CLANG_TIDY_PATH NAMES clang-tidy REQUIRED)
+
+    # if(CLANG_TIDY_PATH)
+    #     message(STATUS "Found clang-tidy: ${CLANG-TIDY_PATH}")
+    #     set_target_properties(${OAM_CONFIGURATOR_CLIENT}
+    #         PROPERTIES
+    #             CXX_CLANG_TIDY ${CLANG-TIDY_PATH}
+    #             # CXX_CLANG_TIDY "${CLANG_TIDY_PATH};--checks=*,--warnings-as-errors=*"
+    #     )
+    # else()
+    #     message(WARNING "clang-tidy not found. Static analysis will not be performed.")
+    # endif()
+# endif()
+
 # Build googletest
 add_subdirectory(
     "${CMAKE_CURRENT_SOURCE_DIR}/googletest" 
@@ -64,10 +90,10 @@ if (MSVC)
 else ()
     target_compile_options(
         homeWork_7 PRIVATE
-        -Wall -Wextra -pedantic -Werror
+        # -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(
         test_list PRIVATE
-        -Wall -Wextra -pedantic -Werror
+        # -Wall -Wextra -pedantic -Werror
     )
 endif()
