@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "iosfwd": "cpp"
+    },
+    "cmake.debugConfig": {
+        "args": [
+            "in.txt",
+            "out.txt"
+        ]
     }
 }

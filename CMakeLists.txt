@@ -1,16 +1,16 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.7.2)
+project(crc32_crack CXX)
 
-project(hw_NUM)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(homeWork_NUM 
-    main.cpp
-    # functions.cpp
-    # functions.h
-    # move_me_out.cpp
-    # move_me_out.h
-)
+add_executable(crc32_crack main.cpp
+        CRC32.cpp
+        CRC32.hpp
+        IO.cpp
+        IO.hpp)
 
-set_target_properties(homeWork_NUM PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED ON
-)
+if (MSVC)
+    target_compile_options(crc32_crack PUBLIC /W4)
+else ()
+    target_compile_options(crc32_crack PUBLIC -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+endif ()
